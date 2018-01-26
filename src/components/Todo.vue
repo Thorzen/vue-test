@@ -2,17 +2,17 @@
   <div class="hello">
     <h1>Manage Todos</h1>
 
-  New Todo: <input type="text" @keyup.enter="todos.push({name: $event.target.value, done: false})">
+  New Todo: <input class="new-todo-input" ref="newTodoInput" type="text" @keyup.enter="todos.push({name: $event.target.value, done: false})">
 
   <h2>Incomplete</h2>
-  <ul id="todos">
+  <ul class="incomplete-todos">
     <li :key="todo.id" v-for="todo in incomplete">
       <input type="checkbox" v-on:change="todo.done = true">{{ todo.name }}
     </li>
   </ul>
 
     <h2>Complete</h2>
-  <ul id="todos">
+  <ul class="complete-todos">
     <li :key="todo.id" v-for="todo in completed">
       <input type="checkbox" checked="checked" v-on:change="todo.done = false"> {{ todo.name }}
     </li>
@@ -32,6 +32,10 @@ export default {
         done: false
       }]
     }
+  },
+  mounted () {
+    // var todo = this.$refs.newTodoInput
+    this.$nextTick(() => this.$refs.newTodoInput.focus())
   },
   methods: {
     onItemCheck () {

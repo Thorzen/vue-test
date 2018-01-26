@@ -19,21 +19,34 @@
 </template>
 
 <script>
+
 export default {
   name: 'Todo',
+  params: ['name', 'list'],
   data () {
     var nextId = 0
+    var todos = localStorage.getItem('todos') || '[]'
+    todos = JSON.parse(todos)
+    // Reset the ids. TODO: Don't even bother storing them.
+    todos.forEach((todo) => {
+      todo.id = nextId++
+    })
     return {
       nextId: nextId,
-      todos: [{
-        name: 'Test This App',
-        id: nextId++,
-        done: false
-      }]
+      todos: todos
     }
   },
   mounted () {
     this.$nextTick(() => this.$refs.newTodoInput.focus())
+  },
+  watch: {
+    todos: {
+      handler () {
+        // Write to local storage so that it can be retrieved in the future.
+        localStorage.setItem('todos', JSON.stringify(this.todos))
+      },
+      deep: true
+    }
   },
   computed: {
     completed () {

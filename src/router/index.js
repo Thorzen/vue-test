@@ -27,9 +27,18 @@ export default new Router({
       props: true
     },
     {
+      path: '/guess/:range',
+      name: 'GuessNumber',
+      component: GuessNumber,
+      props: true
+    },
+    {
       path: '/guess',
       name: 'GuessNumber',
-      component: GuessNumber
+      component: GuessNumber,
+      props: {
+        range: 10
+      }
     }
   ]
 })

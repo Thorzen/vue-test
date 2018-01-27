@@ -1,7 +1,7 @@
 <template>
   <div class="guess-number">
     <h1 class="header">Guess Number</h1>
-    <h2 class="number-range">Pick a number between 1 and {{ range }}</h2>
+    <h2 class="number-range">Pick a number between 1 and {{ maxNum }}</h2>
     <div class="guess-number"><div class="guess-number-label">Enter Number Here</div><input class="guess-number-input" ref="guessNumberInput" type="text"
       @keyup.enter="numberGuessed = parseInt(numberInput, 10)" v-model="numberInput"></div>
     <div class="server-response" v-if="isNum(numberGuessed)">You guessed <strong>{{ numberGuessed }}</strong></div>
@@ -12,17 +12,18 @@
 <script>
 
 export default {
-  name: 'Todo',
+  name: 'GuessNumber',
   props: ['range'],
   data () {
     return {
       actualNumber: undefined,
       numberInput: undefined,
-      numberGuessed: undefined
+      numberGuessed: undefined,
+      maxNum: undefined
     }
   },
   created () {
-    this.actualNumber = this.generateRandomNum(1, this.range)
+      this.pickNewNumber()
   },
   computed: {
     numberHint () {
@@ -35,11 +36,16 @@ export default {
   methods: {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     generateRandomNum: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
-    isNum: (num) => Number.isInteger(num)
+    isNum: (num) => Number.isInteger(num),
+    pickNewNumber() {
+      var intRange = parseInt(this.range, 10)
+      this.maxNum = this.isNum(intRange) ? intRange : 10
+      this.actualNumber = this.generateRandomNum(1, this.maxNum)
+    }
   },
   watch: {
     range () {
-      this.actualNumber = this.generateRandomNum(1, this.range)
+      this.pickNewNumber()
     }
   }
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Index from '@/components/Index'
 import JokeCounter from '@/components/JokeCounter'
 import Todo from '@/components/Todo'
 import GuessNumber from '@/components/GuessNumber'
@@ -11,8 +11,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Index',
+      component: Index
     },
     {
       path: '/joke/:count',
@@ -27,18 +27,10 @@ export default new Router({
       props: true
     },
     {
-      path: '/guess/:range',
+      path: '/guess/:range?',
       name: 'GuessNumber',
       component: GuessNumber,
       props: true
-    },
-    {
-      path: '/guess',
-      name: 'GuessNumber',
-      component: GuessNumber,
-      props: {
-        range: 10
-      }
     }
   ]
 })

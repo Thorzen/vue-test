@@ -20,9 +20,10 @@ export default new Router({
       props: true
     },
     {
-      path: '/todo',
+      path: '/todo/:name/:list',
       name: 'Todo',
-      component: Todo
+      component: Todo,
+      props: true
     }
   ]
 })

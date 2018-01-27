@@ -22,11 +22,10 @@
 
 export default {
   name: 'Todo',
-  params: ['name', 'list'],
+  props: ['name', 'list'],
   data () {
     var nextId = 0
-    var todos = localStorage.getItem('todos') || '[]'
-    todos = JSON.parse(todos)
+    var todos = this.retrieveTodos()
     // Reset the ids. TODO: Don't even bother storing them.
     todos.forEach((todo) => {
       todo.id = nextId++
@@ -43,9 +42,15 @@ export default {
     todos: {
       handler () {
         // Write to local storage so that it can be retrieved in the future.
-        localStorage.setItem('todos', JSON.stringify(this.todos))
+        localStorage.setItem(this.getStorageKey(), JSON.stringify(this.todos))
       },
       deep: true
+    },
+    name () {
+      this.todos = this.retrieveTodos()
+    },
+    list () {
+      this.todos = this.retrieveTodos()
     }
   },
   computed: {
@@ -54,6 +59,16 @@ export default {
     },
     incomplete () {
       return this.todos.filter((todo) => !todo.done)
+    }
+  },
+  methods: {
+    getStorageKey () {
+      return this.name + '/' + this.list + '/todos'
+    },
+    retrieveTodos () {
+      var todos = localStorage.getItem(this.getStorageKey()) || '[]'
+      todos = JSON.parse(todos)
+      return todos
     }
   }
 }

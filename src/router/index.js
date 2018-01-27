@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import JokeCounter from '@/components/JokeCounter'
 import Todo from '@/components/Todo'
+import GuessNumber from '@/components/GuessNumber'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       name: 'Todo',
       component: Todo,
       props: true
+    },
+    {
+      path: '/guess',
+      name: 'GuessNumber',
+      component: GuessNumber
     }
   ]
 })
